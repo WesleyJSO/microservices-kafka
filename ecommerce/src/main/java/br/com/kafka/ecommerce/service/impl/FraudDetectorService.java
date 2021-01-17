@@ -13,9 +13,9 @@ public class FraudDetectorService implements IService {
 		
 		var fraudDetectorService = new FraudDetectorService();
 		
-		var service = new GenericKafkaService(FraudDetectorService.class.getSimpleName(), topicName, fraudDetectorService::parse);
-		
-		service.run();
+		try(var service = new GenericKafkaService(FraudDetectorService.class.getSimpleName(), topicName, fraudDetectorService::parse)) {
+			service.run();			
+		}
 	}
 
 	@Override

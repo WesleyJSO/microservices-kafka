@@ -1,5 +1,6 @@
 package br.com.kafka.ecommerce.service;
 
+import java.io.Closeable;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
@@ -13,7 +14,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 import br.com.kafka.ecommerce.function.ConsumerFunction;
 
-public class GenericKafkaService {
+public class GenericKafkaService implements Closeable {
 
 	private final KafkaConsumer<String, String> consumer;
 	private final ConsumerFunction parse;
@@ -56,5 +57,10 @@ public class GenericKafkaService {
 		properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupIdName);
 		properties.setProperty(ConsumerConfig.CLIENT_ID_CONFIG, UUID.randomUUID().toString());
 		return properties;
+	}
+
+	@Override
+	public void close() {
+		this.close();
 	}
 }

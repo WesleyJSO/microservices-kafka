@@ -15,10 +15,9 @@ public class LogService implements IService {
 		
 		var logService = new LogService();
 		
-		var service = new GenericKafkaService(LogService.class.getSimpleName(), topicName, logService::parse);
-		
-		service.run();
-		
+		try(var service = new GenericKafkaService(LogService.class.getSimpleName(), topicName, logService::parse)) {
+			service.run();			
+		}		
 	}
 	
 	@Override

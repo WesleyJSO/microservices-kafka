@@ -13,9 +13,9 @@ public class EmailService implements IService {
 		
 		var emailService = new EmailService();
 		
-		var service = new GenericKafkaService(EmailService.class.getSimpleName(), topicName, emailService::parse);
-		
-		service.run();
+		try(var service = new GenericKafkaService(EmailService.class.getSimpleName(), topicName, emailService::parse)) {
+			service.run();
+		}
 	}
 	
 	@Override
