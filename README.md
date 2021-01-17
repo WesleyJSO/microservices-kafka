@@ -49,4 +49,12 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic NOME_TOP
 ``` sh
 bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
 ```
+### to change a topic partition size
+``` sh
+bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic [TOPIC_NAME] --partitions [NUMBER_OF_PARTITIONS]
+```
+### to show consumers status
+``` sh
+bin/kafka-consumer-groups.sh -all-groups --boostrap-server localhost:9092 --describe
+```
 *It is important to notice that the [Java JDK](https://www.oracle.com/java/technologies/javase-downloads.html) version needed to run the commands above is 1.8.*
