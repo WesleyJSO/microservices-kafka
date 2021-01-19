@@ -1,4 +1,4 @@
-package br.com.kafka.ecommerce.util;
+package br.com.kafka.ecommerce.serial;
 
 import org.apache.kafka.common.serialization.Serializer;
 

@@ -14,7 +14,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import br.com.kafka.ecommerce.function.ConsumerFunction;
-import br.com.kafka.ecommerce.util.GsonDeserializer;
+import br.com.kafka.ecommerce.serial.GsonDeserializer;
 
 public class GenericKafkaService<T> implements Closeable {
 

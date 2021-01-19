@@ -1,4 +1,4 @@
-package br.com.kafka.ecommerce.service.impl;
+package br.com.kafka.ecommerce;
 
 import java.util.Map;
 import java.util.regex.Pattern;

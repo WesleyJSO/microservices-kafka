@@ -10,7 +10,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import br.com.kafka.ecommerce.entity.IEntity;
-import br.com.kafka.ecommerce.util.GsonSerializer;
+import br.com.kafka.ecommerce.serial.GsonSerializer;
 
 public class GenericKafkaProducer<T extends IEntity> implements IKafkaProducer<T> {
 

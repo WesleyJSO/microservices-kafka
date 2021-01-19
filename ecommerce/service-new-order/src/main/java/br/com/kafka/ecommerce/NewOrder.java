@@ -1,4 +1,4 @@
-package br.com.kafka.ecommerce.dispatcher.impl;
+package br.com.kafka.ecommerce;
 
 import java.math.BigDecimal;
 import java.util.UUID;
