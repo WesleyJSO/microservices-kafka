@@ -1,9 +1,12 @@
 package br.com.kafka.ecommerce.dispatcher.impl;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import br.com.kafka.ecommerce.dispatcher.GenericKafkaProducer;
+import br.com.kafka.ecommerce.entity.Email;
+import br.com.kafka.ecommerce.entity.Order;
 
 public class NewOrder {
 
@@ -12,16 +15,20 @@ public class NewOrder {
 	
 	public static void main(String...strings) throws InterruptedException, ExecutionException {
 		
-		try(var dispatcher = new GenericKafkaProducer()) {
+		try(var orderDispatcher = new GenericKafkaProducer<Order>();
+			var emailDispatcher = new GenericKafkaProducer<Email>()) {
 		
 			for (int i = 0; i < 10; i++) {
-				var key = UUID.randomUUID().toString();
-			
-				var value = key + ", 321, 222";
-				dispatcher.send(topicNewOrder, key, value);
+				var userId = UUID.randomUUID().toString();
+				var orderId = UUID.randomUUID().toString();
+				var value = new BigDecimal(Math.random() * 5000 + 1);
 				
-				var email = "Thank you for your order! We are processing your order!";
-				dispatcher.send(topicSendEmail, key, email);
+				var order = new Order(userId, orderId, value);
+				
+				orderDispatcher.send(topicNewOrder, userId, order);
+				
+				var email = new Email("Emil subject", "Thank you for your order! We are processing your order!");
+				emailDispatcher.send(topicSendEmail, userId, email);
 			}
 		}
 	}	
