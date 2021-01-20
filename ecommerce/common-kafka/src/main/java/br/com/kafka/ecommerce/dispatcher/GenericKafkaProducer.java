@@ -33,8 +33,8 @@ public class GenericKafkaProducer<T extends IEntity> implements IKafkaProducer<T
 			if(exeption != null) {
 				exeption.printStackTrace();
 				return;
-			}
-			System.out.println("sucesso enviando " + data.topic() + ":::partition " + data.partition() + "/ offset " + data.offset() + "/ timestamp " + data.timestamp());
+			} 
+			System.out.println("Success sending " + data.topic() + ":::partition " + data.partition() + "/ offset " + data.offset() + "/ timestamp " + data.timestamp());
 		};
 	}
 	

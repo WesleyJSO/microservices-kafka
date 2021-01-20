@@ -5,15 +5,30 @@ import java.math.BigDecimal;
 
 public class Order implements IEntity {
 
-	@SuppressWarnings("unused")
 	private final String userId, orderId;
-	@SuppressWarnings("unused")
-	private final BigDecimal value;
+	
+	private final BigDecimal ammount;
 
-	public Order(String userId, String orderId, BigDecimal value) {
+	public Order(String userId, String orderId, BigDecimal ammount) {
 		this.userId = userId;
 		this.orderId = orderId;
-		this.value = value;
+		this.ammount = ammount;
+	}
+
+	public BigDecimal getAmmount() {
+		return ammount;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+	
+	@Override
+	public String toString() {
+		return "Order [userId=" + getUserId() + ", orderId=" + getOrderId() + ", ammount=" + ammount + "]";
 	}
 }
-

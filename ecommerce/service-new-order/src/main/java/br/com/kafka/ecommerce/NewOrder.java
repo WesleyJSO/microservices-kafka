@@ -21,9 +21,9 @@ public class NewOrder {
 			for (int i = 0; i < 10; i++) {
 				var userId = UUID.randomUUID().toString();
 				var orderId = UUID.randomUUID().toString();
-				var value = new BigDecimal(Math.random() * 5000 + 1);
+				var ammount = new BigDecimal(Math.random() * 5000 + 1);
 				
-				var order = new Order(userId, orderId, value);
+				var order = new Order(userId, orderId, ammount);
 				
 				orderDispatcher.send(topicNewOrder, userId, order);
 				

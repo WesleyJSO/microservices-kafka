@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -15,6 +16,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 import br.com.kafka.ecommerce.function.ConsumerFunction;
 import br.com.kafka.ecommerce.serial.GsonDeserializer;
+import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
 
 public class GenericKafkaService<T> implements Closeable {
 
@@ -45,7 +47,11 @@ public class GenericKafkaService<T> implements Closeable {
 			if(!records.isEmpty()) {
 				System.out.println("Found " + records.count() + " register(s).");
 				for(var record : records) {
-					parse.consume(record);
+					try {
+						parse.consume(record);
+					} catch (InterruptedException | ExecutionException e) {
+						e.printStackTrace();
+					}
 				}
 			}	
 		}
