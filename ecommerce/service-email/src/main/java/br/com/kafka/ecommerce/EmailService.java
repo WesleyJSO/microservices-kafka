@@ -7,7 +7,7 @@ import br.com.kafka.ecommerce.service.IService;
 
 public class EmailService implements IService<String> {
 
-	private static final String topicName = "ECOMMERCE_SEND_EMAIL";
+	private static final String ECOMMERCE_SEND_EMAIL = "ECOMMERCE_SEND_EMAIL";
 	
 	public static void main(String...strings) {
 		
@@ -15,7 +15,7 @@ public class EmailService implements IService<String> {
 		
 		try(var service = new GenericKafkaService<>(
 				EmailService.class.getSimpleName(), 
-				topicName, 
+				ECOMMERCE_SEND_EMAIL, 
 				emailService::parse,
 				String.class)) {
 			service.run();

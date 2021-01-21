@@ -10,11 +10,12 @@ import br.com.kafka.ecommerce.entity.Order;
 
 public class NewOrder {
 
-	private static final String topicNewOrder = "ECOMMERCE_NEW_ORDER";
-	private static final String topicSendEmail = "ECOMMERCE_SEND_EMAIL";
+	private static final String ECOMMERCE_NEW_ORDER = "ECOMMERCE_NEW_ORDER";
+	private static final String ECOMMERCE_SEND_EMAIL = "ECOMMERCE_SEND_EMAIL";
 	
 	public static void main(String...strings) throws InterruptedException, ExecutionException {
 		
+		var email = Math.random() + "@email.com.br";
 		try(var orderDispatcher = new GenericKafkaProducer<Order>();
 			var emailDispatcher = new GenericKafkaProducer<Email>()) {
 		
@@ -23,12 +24,12 @@ public class NewOrder {
 				var orderId = UUID.randomUUID().toString();
 				var ammount = new BigDecimal(Math.random() * 5000 + 1);
 				
-				var order = new Order(userId, orderId, ammount);
+				var order = new Order(userId, orderId, ammount, email);
 				
-				orderDispatcher.send(topicNewOrder, userId, order);
+				orderDispatcher.send(ECOMMERCE_NEW_ORDER, userId, order);
 				
-				var email = new Email("Emil subject", "Thank you for your order! We are processing your order!");
-				emailDispatcher.send(topicSendEmail, userId, email);
+				var emailData = new Email("Emil subject", "Thank you for your order! We are processing your order!");
+				emailDispatcher.send(ECOMMERCE_SEND_EMAIL, userId, emailData);
 			}
 		}
 	}	
