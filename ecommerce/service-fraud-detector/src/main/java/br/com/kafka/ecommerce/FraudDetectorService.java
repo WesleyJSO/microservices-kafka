@@ -53,17 +53,20 @@ public class FraudDetectorService implements IService<Order> {
 
 	private void validate(ConsumerRecord<String, Order> record) throws InterruptedException, ExecutionException {
 		var order = record.value();
-		if(!isValid(order)) {
-			print("Rejected invalid order!");
-			orderProducer.send(ECOMMERCE_ORDER_REJECTED, order.getUserId(), order);
-		} else if(isFraud(order)) {
-			print("Order is a fraud!");
-			orderProducer.send(ECOMMERCE_ORDER_REJECTED, order.getUserId(), order);
-		} else {
-			orderProducer.send(ECOMMERCE_ORDER_APPROVED, order.getUserId(), order);			
-			print("Approved: " + order);
-		}		
+		if(!isValid(order))
+			sendMessage("Rejected invalid order!", ECOMMERCE_ORDER_REJECTED, order);
+		else if(isFraud(order))
+			sendMessage("Order is a fraud!", ECOMMERCE_ORDER_REJECTED, order);
+		else
+			sendMessage("Approved: " + order, ECOMMERCE_ORDER_APPROVED, order);
+				
 		print("Order was processed.");
+	}
+
+
+	private void sendMessage(String message, String ECOMMERCE_TOPIC, Order order) throws InterruptedException, ExecutionException {
+		print(message);
+		orderProducer.send(ECOMMERCE_TOPIC, order.getUserId(), order);
 	}
 
 
