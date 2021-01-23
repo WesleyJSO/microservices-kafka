@@ -66,7 +66,7 @@ public class FraudDetectorService implements IService<Order> {
 
 	private void sendMessage(String message, String ECOMMERCE_TOPIC, Order order) throws InterruptedException, ExecutionException {
 		print(message);
-		orderProducer.send(ECOMMERCE_TOPIC, order.getUserId(), order);
+		orderProducer.send(ECOMMERCE_TOPIC, order.getEmail(), order);
 	}
 
 
@@ -83,6 +83,6 @@ public class FraudDetectorService implements IService<Order> {
 	}
 	
 	private boolean isValid(Order order) {
-		return order.getAmmount() != null && order.getOrderId() != null && order.getUserId() != null;
+		return order.getAmmount() != null && order.getOrderId() != null && order.getEmail() != null;
 	}
 }

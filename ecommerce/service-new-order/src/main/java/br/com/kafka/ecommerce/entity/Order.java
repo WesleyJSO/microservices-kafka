@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 public class Order implements IEntity {
 
-	private final String userId, orderId;
+	@SuppressWarnings("unused")
+	private final String orderId, email;
+	@SuppressWarnings("unused")
 	private final BigDecimal ammount;
-	private final String email;
 	
-	public Order(String userId, String orderId, BigDecimal ammount, String email) {
-		this.userId = userId;
+	public Order(String orderId, BigDecimal ammount, String email) {
 		this.orderId = orderId;
 		this.ammount = ammount;
 		this.email = email;

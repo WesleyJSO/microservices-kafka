@@ -5,14 +5,14 @@ import java.math.BigDecimal;
 
 public class Order implements IEntity {
 
-	private final String userId, orderId;
+	private final String orderId, email;
 	
 	private final BigDecimal ammount;
 
-	public Order(String userId, String orderId, BigDecimal ammount) {
-		this.userId = userId;
+	public Order(String orderId, BigDecimal ammount, String email) {
 		this.orderId = orderId;
 		this.ammount = ammount;
+		this.email = email;
 	}
 
 	public BigDecimal getAmmount() {
@@ -23,12 +23,12 @@ public class Order implements IEntity {
 		return orderId;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getEmail() {
+		return email;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Order [userId=" + getUserId() + ", orderId=" + getOrderId() + ", ammount=" + ammount + "]";
+		return "Order [orderId=" + orderId + ", email=" + email + ", ammount=" + ammount + "]";
 	}
 }

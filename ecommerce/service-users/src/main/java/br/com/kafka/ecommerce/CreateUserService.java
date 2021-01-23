@@ -3,6 +3,7 @@ package br.com.kafka.ecommerce;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -50,16 +51,16 @@ public class CreateUserService implements IService<Order> {
 		
 		var order = record.value();
 		if(isNewUser(order.getEmail())) {
-			insertNewUser(order);
+			insertNewUser(order.getEmail());
 		}
 	}
 
-	private void insertNewUser(Order order) throws SQLException {
+	private void insertNewUser(String email) throws SQLException {
 		var insert = connection.prepareStatement("insert into Users (uuid, email) values (?, ?)");
-		insert.setString(1, order.getUserId());
-		insert.setString(2, order.getEmail());
+		insert.setString(1, UUID.randomUUID().toString());
+		insert.setString(2, email);
 		insert.execute();
-		System.out.println("User uuid: " + order.getEmail() + " added");
+		System.out.println("User uuid: " + email + " added");
 	}
 
 	private boolean isNewUser(String email) throws SQLException {

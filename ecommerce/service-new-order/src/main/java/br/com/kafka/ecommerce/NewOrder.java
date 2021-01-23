@@ -15,21 +15,20 @@ public class NewOrder {
 	
 	public static void main(String...strings) throws InterruptedException, ExecutionException {
 		
-		var email = Math.random() + "@email.com.br";
 		try(var orderDispatcher = new GenericKafkaProducer<Order>();
 			var emailDispatcher = new GenericKafkaProducer<Email>()) {
 		
 			for (int i = 0; i < 10; i++) {
-				var userId = UUID.randomUUID().toString();
 				var orderId = UUID.randomUUID().toString();
 				var ammount = new BigDecimal(Math.random() * 5000 + 1);
+				var email = Math.random() + "@email.com.br";
 				
-				var order = new Order(userId, orderId, ammount, email);
+				var order = new Order(orderId, ammount, email);
 				
-				orderDispatcher.send(ECOMMERCE_NEW_ORDER, userId, order);
+				orderDispatcher.send(ECOMMERCE_NEW_ORDER, email, order);
 				
 				var emailData = new Email("Emil subject", "Thank you for your order! We are processing your order!");
-				emailDispatcher.send(ECOMMERCE_SEND_EMAIL, userId, emailData);
+				emailDispatcher.send(ECOMMERCE_SEND_EMAIL, email, emailData);
 			}
 		}
 	}	
