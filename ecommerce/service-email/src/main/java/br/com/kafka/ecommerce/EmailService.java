@@ -1,6 +1,10 @@
 package br.com.kafka.ecommerce;
 
+import java.util.Map;
+
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.serialization.StringDeserializer;
 
 import br.com.kafka.ecommerce.service.GenericKafkaService;
 import br.com.kafka.ecommerce.service.IService;
@@ -17,7 +21,8 @@ public class EmailService implements IService<String> {
 				EmailService.class.getSimpleName(), 
 				ECOMMERCE_SEND_EMAIL, 
 				emailService::parse,
-				String.class)) {
+				String.class,
+				Map.ofEntries(Map.entry(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName())))) {
 			service.run();
 		}
 	}
@@ -33,7 +38,6 @@ public class EmailService implements IService<String> {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		print("E-mail sent.");
