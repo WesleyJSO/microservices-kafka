@@ -26,6 +26,13 @@ public class GenericKafkaService<T> implements Closeable {
 		consumer.subscribe(Collections.singletonList(topic));
 	}
 	
+	public GenericKafkaService(String groupIdName, String topic, ConsumerFunction<T> parse, Class<T> clazz, 
+			Map<String, String> properties) {
+		
+		this(parse, groupIdName, clazz, properties);
+		consumer.subscribe(Collections.singletonList(topic));
+	}
+	
 	public GenericKafkaService(String groupIdName, Pattern topic, ConsumerFunction<T> parse, Class<T> clazz, 
 			Map<String, String> properties) {
 		
