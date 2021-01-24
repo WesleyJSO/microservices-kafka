@@ -43,6 +43,7 @@ public class GenericKafkaProducer<T extends IEntity> implements IKafkaProducer<T
 		properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 		properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, GsonSerializer.class.getName());
+		properties.setProperty(ProducerConfig.ACKS_CONFIG, "all"); // wait for the full set of in-sync replicas to acknowledge the record
 		return properties;
 	}
 
