@@ -32,23 +32,19 @@ public class NewOrderServlet extends HttpServlet {
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		try(var orderDispatcher = new GenericKafkaProducer<Order>();
-				var emailDispatcher = new GenericKafkaProducer<Email>()) {
+		try {
+			var order = getOrderData(req);
 			
-			try {
-				var order = getOrderData(req);
-				
-				orderDispatcher.send(ECOMMERCE_NEW_ORDER, order.getEmail(), order);
-				
-				var emailData = new Email("Emil subject", "Thank you for your order! We are processing your order!");
-				emailDispatcher.send(ECOMMERCE_SEND_EMAIL, order.getEmail(), emailData);			
-				
-				returnSuccessMessage(res);
-				
-			} catch(InterruptedException | ExecutionException e) {
-				throw new ServletException(e);
-			}
-		}	
+			orderDispatcher.send(ECOMMERCE_NEW_ORDER, order.getEmail(), order);
+			
+			var emailData = new Email("Emil subject", "Thank you for your order! We are processing your order!");
+			emailDispatcher.send(ECOMMERCE_SEND_EMAIL, order.getEmail(), emailData);			
+			
+			returnSuccessMessage(res);
+			
+		} catch(InterruptedException | ExecutionException e) {
+			throw new ServletException(e);
+		}
 	}
 
 	private Order getOrderData(HttpServletRequest req) {

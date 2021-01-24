@@ -12,13 +12,17 @@ import br.com.kafka.ecommerce.service.IService;
 
 public class LogService implements IService<String> {
 
-	private static final Pattern topicName = Pattern.compile("ECOMMERCE.*");
+	private static final Pattern ECOMMERCE_ALL = Pattern.compile("ECOMMERCE.*");
 	
 	public static void main(String...strings) {
 		
 		var logService = new LogService();
 		
-		try(var service = new GenericKafkaService<>(LogService.class.getSimpleName(), topicName, logService::parse, String.class,
+		try(var service = new GenericKafkaService<>(
+				LogService.class.getSimpleName(), 
+				ECOMMERCE_ALL, 
+				logService::parse, 
+				String.class,
 				Map.ofEntries(Map.entry(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName())))) {
 			service.run();
 		}		
