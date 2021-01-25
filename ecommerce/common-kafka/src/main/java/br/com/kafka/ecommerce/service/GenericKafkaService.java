@@ -13,6 +13,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import br.com.kafka.ecommerce.entity.User;
 import br.com.kafka.ecommerce.function.ConsumerFunction;
 import br.com.kafka.ecommerce.serial.GsonDeserializer;
 
@@ -25,7 +26,7 @@ public class GenericKafkaService<T> implements Closeable {
 		this(parse, groupIdName, clazz, Map.of());
 		consumer.subscribe(Collections.singletonList(topic));
 	}
-	
+
 	public GenericKafkaService(String groupIdName, String topic, ConsumerFunction<T> parse, Class<T> clazz, 
 			Map<String, String> properties) {
 		
@@ -45,6 +46,7 @@ public class GenericKafkaService<T> implements Closeable {
 		this.consumer = new KafkaConsumer<>(getProperties(clazz, groupIdName, properties));
 	}
 	
+
 	public void run() {
 		while(true) {
  			ConsumerRecords<String, T> records = consumer.poll(Duration.ofMillis(100));
